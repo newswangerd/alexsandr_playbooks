@@ -1,0 +1,4 @@
+[moodle] 
+master ansible_host=localhost user=vagrant
+
+
