@@ -1,0 +1,56 @@
+---
+- hosts: moodle
+  become_user: root
+  become: yes
+  connection: local
+  tasks:
+  - name: install httpd service
+    yum:
+      name: httpd
+      state: latest
+      update_cache: yes
+  - name: install git and vim 
+    yum:
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
+    with_items:
+    - git
+    - vim
+  - name: start and enable httpd services
+    service: 
+      name: httpd
+      state: started 
+      enabled: true 
+  - name: install MariaDB MySQL
+    yum: 
+      name: "{{ item }}"
+      state: latest
+      update_cache: yes
+    with_items: 
+    - mariadb
+    - mariadb-server
+    - MySQL-python
+  - name: start and enable service
+    service: 
+      name: mariadb
+      state: started
+      enabled: true
+  - name: remove test database
+    mysql_db:
+      db: test
+      state: absent 
+  - name: git Moodle
+    git:
+      repo: "git://github.com/moodle/moodle.git"
+      dest: /var/www/html
+  - name: rpm
+    yum:
+      name: "{{ item }}"
+    with_items:
+    - "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+    - "https://mirror.webtatic.com/yum/el7/webtatic-release.rpm"
+  - name: php70
+    yum:
+      name: "php70w"
+    
