@@ -2,14 +2,13 @@
 - hosts: moodle
   become_user: root
   become: yes
-  connection: local
   tasks:
   - name: install httpd service
     yum:
       name: httpd
       state: latest
       update_cache: yes
-  - name: install git and vim 
+  - name: install git and vim
     yum:
       name: "{{ item }}"
       state: latest
@@ -18,28 +17,28 @@
     - git
     - vim
   - name: start and enable httpd services
-    service: 
+    service:
       name: httpd
-      state: started 
-      enabled: true 
+      state: started
+      enabled: true
   - name: install MariaDB MySQL
-    yum: 
+    yum:
       name: "{{ item }}"
       state: latest
       update_cache: yes
-    with_items: 
+    with_items:
     - mariadb
     - mariadb-server
     - MySQL-python
   - name: start and enable service
-    service: 
+    service:
       name: mariadb
       state: started
       enabled: true
   - name: remove test database
     mysql_db:
       db: test
-      state: absent 
+      state: absent
   - name: git Moodle
     git:
       repo: "git://github.com/moodle/moodle.git"
@@ -53,4 +52,3 @@
   - name: php70
     yum:
       name: "php70w"
-    
