@@ -40,7 +40,13 @@
       db: test
       state: absent
 
-  - name: config database
+  
+  - mysql_user:
+      name: "moodle"
+      password: "password"
+      priv: '*.*:ALL'
+      state: present
+  - name: Config DB 
     mysql_db: 
       name: moodle
       login_user: "moodle"
