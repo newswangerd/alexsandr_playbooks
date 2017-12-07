@@ -57,4 +57,9 @@
     service:    
        name: httpd
        state: restarted
-
+  - name:
+    file:
+      path: /var/www/moodledata
+      owner: apache
+      state: directory 
+      mode: "u=rw,g=rwx,o=rwx"
