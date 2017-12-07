@@ -52,3 +52,9 @@
   - name: php70
     yum:
       name: "php70w"
+
+  - name: restart Apache 
+    service:    
+       name: httpd
+       state: restarted
+
