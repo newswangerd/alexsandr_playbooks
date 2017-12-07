@@ -41,7 +41,7 @@
       state: absent
 
   - name: config database
-    service:   
+    mysql_db: 
       name: moodle
       login_user: "moodle"
       state: present
